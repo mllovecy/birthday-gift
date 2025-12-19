@@ -76,21 +76,20 @@
         <!-- 渐变蒙版（提升高级感） -->
         <div class="absolute w-full h-full bg-gradient-to-b from-black/30 to-black/60"></div>
         <!-- 标题文字 -->
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-white">
-            <h1 class="text-[clamp(2rem,5vw,3rem)] font-bold mb-4 text-shadow-lg">致琰宝，生日快乐</h1>
-            <p class="text-[clamp(1rem,2vw,1.2rem)] opacity-90">这是属于我们的独家记忆</p>
+        <div class="absolute inset-0 flex flex-col justify-center items-center text-white text-center px-4">
+            <h1 class="text-[clamp(2rem,5vw,3.5rem)] font-bold mb-4 drop-shadow-lg">生日快乐，我的琰宝</h1>
+            <p class="text-[clamp(1rem,2vw,1.5rem)] max-w-lg drop-shadow-md">愿你的每一天都如星光般璀璨</p>
         </div>
-        <!-- 爱心点击特效容器 -->
-        <div id="heartContainer" class="absolute w-full h-full pointer-events-none"></div>
     </header>
 
-    <main class="container mx-auto px-4 py-10 max-w-4xl">
+    <!-- 主要内容 -->
+    <main class="container mx-auto px-4 py-12">
         <!-- 一、图片轮播模块 -->
         <section class="mb-16">
             <h2 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-center mb-8 text-gradient">心动瞬间</h2>
             <div class="relative w-full h-[clamp(200px,50vw,400px)] rounded-2xl overflow-hidden shadow-xl">
                 <!-- 轮播容器 -->
-                <div class="carousel-inner flex h-full w-full" id="carouselInner">
+                <div class="carousel-inner flex h-full" id="carouselInner">
                     <!-- 轮播图1（替换为你的carousel1.jpg） -->
                     <div class="carousel-item w-full flex-shrink-0">
                         <img src="img/carousel1.jpg" alt="心动瞬间1" class="w-full h-full object-cover">
@@ -213,7 +212,6 @@
             <div class="w-full p-8 rounded-2xl bg-white/50 glass shadow-xl">
                 <p class="text-[clamp(1rem,2vw,1.2rem)] leading-relaxed text-gray-800 mb-6">
                     亲爱的琰宝，生日快乐！<br>
-                    1221是个对称、美妙的数字~<br>
                     很幸运能走进你的生活，陪你走过每一个平凡又珍贵的瞬间。<br>
                     未来的日子，我会一直陪在你身边，一起去更多地方，一起打造我们的小家庭～<br>
                     愿你永远开心，永远是我的小女孩❤️
@@ -229,13 +227,11 @@
 
     <!-- 底部 -->
     <footer class="bg-love/20 py-6 text-center text-gray-600">
-        <p>© 2025 致我的琰宝 | 生日快乐</p>
+        <p>© 2025 致我的女孩 | 生日快乐</p>
     </footer>
 
-    <!-- 音频自动播放（浏览器限制：需用户交互） -->
-    <audio autoplay loop muted id="bgAudio">
-        <source src="audio/bg-music.mp3" type="audio/mpeg">
-    </audio>
+    <!-- 爱心点击特效容器 -->
+    <div id="heartContainer" class="fixed inset-0 pointer-events-none"></div>
 
     <script>
         // 一、图片轮播逻辑
@@ -312,15 +308,6 @@
         // 视频暂停时显示封面
         memoryVideo.addEventListener('pause', () => {
             videoCover.style.display = 'flex';
-        });
-
-        // 三、音频解锁（点击页面任意位置）
-        document.addEventListener('click', () => {
-        const bgAudio = document.getElementById('bgAudio');
-        bgAudio.muted = false;
-        // 设置音量为50%（范围0-1）
-        bgAudio.volume = 0.5;
-        bgAudio.play().catch(err => console.log('音频播放失败：', err));
         });
 
         // 四、爱心点击特效
