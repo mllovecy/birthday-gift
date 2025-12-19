@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>致我的女孩 - 生日快乐</title>
-    <!-- 引入Tailwind CSS（快速实现高级样式，无需写大量原生CSS） -->
+    <title>致琰宝 - 生日快乐</title>
+    <!-- 引入Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- 引入字体图标（爱心、播放按钮等） -->
+    <!-- 引入字体图标 -->
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <!-- 自定义配置：调色板+字体 -->
     <script>
@@ -138,39 +138,9 @@
             </div>
         </section>
 
-        <!-- 三、音频祝福模块 -->
+        <!-- 三、时光轴回忆模块 -->
         <section class="mb-16">
-            <h2 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-center mb-8 text-gradient">爱的絮语</h2>
-            <div class="flex flex-col md:flex-row gap-6 justify-center items-center">
-                <!-- 背景音乐 -->
-                <div class="w-full md:w-1/2 p-6 rounded-2xl bg-white/50 glass shadow-lg">
-                    <h3 class="text-lg font-semibold mb-4 text-love-dark">背景音乐：将故事写成我们</h3>
-                    <div class="flex items-center gap-4">
-                        <i class="fa fa-music text-2xl text-love-soft"></i>
-                        <audio controls class="w-full">
-                            <source src="audio/bg-music.mp3" type="audio/mpeg">
-                            你的浏览器不支持音频播放
-                        </audio>
-                    </div>
-                    <p class="text-sm text-gray-600 mt-2 text-center">点击页面任意位置解锁自动播放～</p>
-                </div>
-                <!-- 语音祝福 -->
-                <div class="w-full md:w-1/2 p-6 rounded-2xl bg-white/50 glass shadow-lg">
-                    <h3 class="text-lg font-semibold mb-4 text-love-dark">我的语音祝福</h3>
-                    <div class="flex items-center gap-4">
-                        <i class="fa fa-microphone text-2xl text-love-soft"></i>
-                        <audio controls class="w-full">
-                            <source src="audio/voice-wish.mp3" type="audio/mpeg">
-                            你的浏览器不支持音频播放
-                        </audio>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 四、时光轴回忆模块 -->
-        <section class="mb-16">
-            <h2 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-center mb-8 text-gradient">我们的时光线</h2>
+            <h2 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-center mb-8 text-gradient">我们的时光</h2>
             <div class="relative">
                 <!-- 时间轴竖线 -->
                 <div class="absolute left-1/2 top-0 bottom-0 w-1 bg-love/30 -translate-x-1/2"></div>
@@ -219,9 +189,27 @@
             </div>
         </section>
 
+        <!-- 四、音频祝福模块（爱的絮语） -->
+        <section class="mb-16">
+            <h2 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-center mb-8 text-gradient">爱的絮语</h2>
+            <div class="flex flex-col md:flex-row gap-6 justify-center items-center">
+                <!-- 只保留语音祝福部分 -->
+                <div class="w-full md:w-1/2 p-6 rounded-2xl bg-white/50 glass shadow-lg">
+                    <h3 class="text-lg font-semibold mb-4 text-love-dark">我的悄悄话^_^</h3>
+                    <div class="flex items-center gap-4">
+                        <i class="fa fa-microphone text-2xl text-love-soft"></i>
+                        <audio controls class="w-full">
+                            <source src="audio/voice-wish.mp3" type="audio/mpeg">
+                            你的浏览器不支持音频播放
+                        </audio>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- 五、手写祝福模块 -->
         <section class="mb-16">
-            <h2 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-center mb-8 text-gradient">我的祝福</h2>
+            <h2 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-center mb-8 text-gradient">生日祝福</h2>
             <div class="w-full p-8 rounded-2xl bg-white/50 glass shadow-xl">
                 <p class="text-[clamp(1rem,2vw,1.2rem)] leading-relaxed text-gray-800 mb-6">
                     亲爱的琰宝，生日快乐！<br>
@@ -329,8 +317,6 @@
         document.addEventListener('click', () => {
             const bgAudio = document.getElementById('bgAudio');
             bgAudio.muted = false;
-            // 设置背景音乐音量为50%
-            bgAudio.volume = 0.5;
             bgAudio.play().catch(err => console.log('音频播放失败：', err));
         });
 
@@ -345,6 +331,7 @@
                 heart.style.top = `${e.clientY}px`;
                 heart.style.fontSize = `${Math.random() * 20 + 10}px`;
                 heartContainer.appendChild(heart);
+
                 // 移除爱心
                 setTimeout(() => {
                     heart.remove();
