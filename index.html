@@ -1,0 +1,357 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>致我的女孩 - 生日快乐</title>
+    <!-- 引入Tailwind CSS（快速实现高级样式，无需写大量原生CSS） -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入字体图标（爱心、播放按钮等） -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- 自定义配置：调色板+字体 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // 高级温馨的莫兰迪粉色调
+                        love: {
+                            light: '#fdf2f8',
+                            DEFAULT: '#f9a8d4',
+                            dark: '#e53e3e',
+                            soft: '#f687b3'
+                        }
+                    },
+                    fontFamily: {
+                        // 温馨的中文字体
+                        sweet: ['"Microsoft YaHei"', '"PingFang SC"', sans-serif]
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            /* 自定义工具类：磨砂玻璃效果 */
+            .glass {
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+            }
+            /* 自定义工具类：文字渐变 */
+            .text-gradient {
+                background-clip: text;
+                -webkit-background-clip: text;
+                color: transparent;
+                background-image: linear-gradient(120deg, #f687b3, #e53e3e);
+            }
+            /* 图片轮播动画 */
+            .carousel-item {
+                transition: transform 0.5s ease-in-out;
+            }
+            /* 爱心动画 */
+            .heart {
+                position: absolute;
+                color: #e53e3e;
+                opacity: 0;
+                animation: heartFall 1.5s ease-in-out forwards;
+            }
+            @keyframes heartFall {
+                0% {
+                    transform: scale(0) translateY(0);
+                    opacity: 1;
+                }
+                100% {
+                    transform: scale(1) translateY(100px);
+                    opacity: 0;
+                }
+            }
+        }
+    </style>
+</head>
+<body class="bg-love-light font-sweet overflow-x-hidden">
+    <!-- 顶部横幅：背景图+渐变蒙版 -->
+    <header class="relative h-[50vh] min-h-[300px] w-full overflow-hidden">
+        <!-- 背景图（替换为你的banner.jpg） -->
+        <img src="img/banner.jpg" alt="我们的合照" class="absolute w-full h-full object-cover">
+        <!-- 渐变蒙版（提升高级感） -->
+        <div class="absolute w-full h-full bg-gradient-to-b from-black/30 to-black/60"></div>
+        <!-- 标题文字 -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center text-white">
+            <h1 class="text-[clamp(2rem,5vw,3rem)] font-bold mb-4 text-shadow-lg">致我的女孩，生日快乐</h1>
+            <p class="text-[clamp(1rem,2vw,1.2rem)] opacity-90">这是属于我们的独家记忆</p>
+        </div>
+        <!-- 爱心点击特效容器 -->
+        <div id="heartContainer" class="absolute w-full h-full pointer-events-none"></div>
+    </header>
+
+    <main class="container mx-auto px-4 py-10 max-w-4xl">
+        <!-- 一、图片轮播模块 -->
+        <section class="mb-16">
+            <h2 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-center mb-8 text-gradient">心动瞬间</h2>
+            <div class="relative w-full h-[clamp(200px,50vw,400px)] rounded-2xl overflow-hidden shadow-xl">
+                <!-- 轮播容器 -->
+                <div class="carousel-inner flex h-full w-full" id="carouselInner">
+                    <!-- 轮播图1（替换为你的carousel1.jpg） -->
+                    <div class="carousel-item w-full flex-shrink-0">
+                        <img src="img/carousel1.jpg" alt="心动瞬间1" class="w-full h-full object-cover">
+                    </div>
+                    <!-- 轮播图2（替换为你的carousel2.jpg） -->
+                    <div class="carousel-item w-full flex-shrink-0">
+                        <img src="img/carousel2.jpg" alt="心动瞬间2" class="w-full h-full object-cover">
+                    </div>
+                    <!-- 轮播图3（替换为你的carousel3.jpg） -->
+                    <div class="carousel-item w-full flex-shrink-0">
+                        <img src="img/carousel3.jpg" alt="心动瞬间3" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <!-- 轮播指示器 -->
+                <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                    <button class="carousel-dot w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-all" data-index="0"></button>
+                    <button class="carousel-dot w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-all" data-index="1"></button>
+                    <button class="carousel-dot w-3 h-3 rounded-full bg-white/50 hover:bg-white transition-all" data-index="2"></button>
+                </div>
+                <!-- 左右切换按钮 -->
+                <button class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/30 glass flex items-center justify-center text-white hover:bg-white/50 transition-all" id="prevBtn">
+                    <i class="fa fa-chevron-left"></i>
+                </button>
+                <button class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/30 glass flex items-center justify-center text-white hover:bg-white/50 transition-all" id="nextBtn">
+                    <i class="fa fa-chevron-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- 二、视频回忆模块 -->
+        <section class="mb-16">
+            <h2 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-center mb-8 text-gradient">时光片段</h2>
+            <div class="relative w-full h-[clamp(200px,50vw,400px)] rounded-2xl overflow-hidden shadow-xl">
+                <!-- 视频封面（点击播放后隐藏） -->
+                <div class="video-cover absolute w-full h-full flex items-center justify-center bg-black/40" id="videoCover">
+                    <button class="w-20 h-20 rounded-full bg-love-soft/80 glass flex items-center justify-center text-white hover:bg-love-soft transition-all" id="playBtn">
+                        <i class="fa fa-play text-2xl"></i>
+                    </button>
+                </div>
+                <!-- 视频（替换为你的memory.mp4） -->
+                <video class="w-full h-full object-cover" id="memoryVideo" controls poster="">
+                    <source src="video/memory.mp4" type="video/mp4">
+                    你的浏览器不支持视频播放
+                </video>
+            </div>
+        </section>
+
+        <!-- 三、音频祝福模块 -->
+        <section class="mb-16">
+            <h2 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-center mb-8 text-gradient">爱的絮语</h2>
+            <div class="flex flex-col md:flex-row gap-6 justify-center items-center">
+                <!-- 背景音乐 -->
+                <div class="w-full md:w-1/2 p-6 rounded-2xl bg-white/50 glass shadow-lg">
+                    <h3 class="text-lg font-semibold mb-4 text-love-dark">背景音乐：将故事写成我们</h3>
+                    <div class="flex items-center gap-4">
+                        <i class="fa fa-music text-2xl text-love-soft"></i>
+                        <audio controls class="w-full">
+                            <source src="audio/bg-music.mp3" type="audio/mpeg">
+                            你的浏览器不支持音频播放
+                        </audio>
+                    </div>
+                    <p class="text-sm text-gray-600 mt-2 text-center">点击页面任意位置解锁自动播放～</p>
+                </div>
+                <!-- 语音祝福 -->
+                <div class="w-full md:w-1/2 p-6 rounded-2xl bg-white/50 glass shadow-lg">
+                    <h3 class="text-lg font-semibold mb-4 text-love-dark">我的语音祝福</h3>
+                    <div class="flex items-center gap-4">
+                        <i class="fa fa-microphone text-2xl text-love-soft"></i>
+                        <audio controls class="w-full">
+                            <source src="audio/voice-wish.mp3" type="audio/mpeg">
+                            你的浏览器不支持音频播放
+                        </audio>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 四、时光轴回忆模块 -->
+        <section class="mb-16">
+            <h2 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-center mb-8 text-gradient">我们的时光线</h2>
+            <div class="relative">
+                <!-- 时间轴竖线 -->
+                <div class="absolute left-1/2 top-0 bottom-0 w-1 bg-love/30 -translate-x-1/2"></div>
+                
+                <!-- 时光轴项1 -->
+                <div class="timeline-item flex flex-col md:flex-row mb-12 relative">
+                    <div class="md:w-1/2 md:pr-12 mb-4 md:mb-0 text-right">
+                        <h3 class="text-xl font-semibold text-love-dark">2022年5月21日 · 初遇</h3>
+                        <p class="text-gray-600 mt-2">第一次在母校旁的联谊会上见到你，目光对视之间，我心里就咯噔一下～</p>
+                    </div>
+                    <div class="absolute left-1/2 top-4 w-6 h-6 rounded-full bg-love-soft text-white flex items-center justify-center -translate-x-1/2 z-10">
+                        <i class="fa fa-heart-o"></i>
+                    </div>
+                    <div class="md:w-1/2 md:pl-12">
+                        <img src="img/photo1.jpg" alt="初遇" class="rounded-xl shadow-md w-full">
+                    </div>
+                </div>
+
+                <!-- 时光轴项2 -->
+                <div class="timeline-item flex flex-col md:flex-row mb-12 relative">
+                    <div class="md:w-1/2 md:pr-12 order-2 md:order-1">
+                        <img src="img/photo2.jpg" alt="牵手" class="rounded-xl shadow-md w-full">
+                    </div>
+                    <div class="absolute left-1/2 top-4 w-6 h-6 rounded-full bg-love-soft text-white flex items-center justify-center -translate-x-1/2 z-10">
+                        <i class="fa fa-hand-holding-o"></i>
+                    </div>
+                    <div class="md:w-1/2 md:pl-12 mb-4 md:mb-0 order-1 md:order-2">
+                        <h3 class="text-xl font-semibold text-love-dark">2022年8月27日 · 牵手</h3>
+                        <p class="text-gray-600 mt-2">在放鸡岛上漫步看夕阳，仿佛整个世界只有我俩，海风都是甜的～</p>
+                    </div>
+                </div>
+
+                <!-- 时光轴项3 -->
+                <div class="timeline-item flex flex-col md:flex-row relative">
+                    <div class="md:w-1/2 md:pr-12 mb-4 md:mb-0 text-right">
+                        <h3 class="text-xl font-semibold text-love-dark">未来 Forever · 日常</h3>
+                        <p class="text-gray-600 mt-2">我们约定好一起拍很多很多照片，吃很多很多好吃的，看你吃得开心我也开心～</p>
+                    </div>
+                    <div class="absolute left-1/2 top-4 w-6 h-6 rounded-full bg-love-soft text-white flex items-center justify-center -translate-x-1/2 z-10">
+                        <i class="fa fa-cutlery"></i>
+                    </div>
+                    <div class="md:w-1/2 md:pl-12">
+                        <img src="img/photo3.jpg" alt="日常" class="rounded-xl shadow-md w-full">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 五、手写祝福模块 -->
+        <section class="mb-16">
+            <h2 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-center mb-8 text-gradient">我的祝福</h2>
+            <div class="w-full p-8 rounded-2xl bg-white/50 glass shadow-xl">
+                <p class="text-[clamp(1rem,2vw,1.2rem)] leading-relaxed text-gray-800 mb-6">
+                    亲爱的琰宝，生日快乐！<br>
+                    很幸运能走进你的生活，陪你走过每一个平凡又珍贵的瞬间。<br>
+                    未来的日子，我会一直陪在你身边，一起去更多地方，一起打造我们的小家庭～<br>
+                    愿你永远开心，永远是我的小女孩❤️
+                </p>
+                <div class="flex justify-end items-center gap-2">
+                    <!-- 头像（可选） -->
+                    <img src="img/avatar.png" alt="我的头像" class="w-10 h-10 rounded-full object-cover">
+                    <p class="text-love-dark font-semibold">爱你的我 | 2025年12月21日</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 底部 -->
+    <footer class="bg-love/20 py-6 text-center text-gray-600">
+        <p>© 2025 致我的女孩 | 生日快乐</p>
+    </footer>
+
+    <!-- 音频自动播放（浏览器限制：需用户交互） -->
+    <audio autoplay loop muted id="bgAudio">
+        <source src="audio/bg-music.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        // 一、图片轮播逻辑
+        const carouselInner = document.getElementById('carouselInner');
+        const dots = document.querySelectorAll('.carousel-dot');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let currentIndex = 0;
+        const itemCount = dots.length;
+
+        // 更新轮播指示器
+        const updateDots = () => {
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('bg-white', index === currentIndex);
+                dot.classList.toggle('bg-white/50', index !== currentIndex);
+            });
+        };
+
+        // 切换轮播图
+        const switchCarousel = (index) => {
+            currentIndex = index;
+            carouselInner.style.transform = `translateX(-${currentIndex * 100}%)`;
+            updateDots();
+        };
+
+        // 下一张
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % itemCount;
+            switchCarousel(currentIndex);
+        });
+
+        // 上一张
+        prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + itemCount) % itemCount;
+            switchCarousel(currentIndex);
+        });
+
+        // 点击指示器切换
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                switchCarousel(index);
+            });
+        });
+
+        // 自动轮播
+        let autoPlay = setInterval(() => {
+            currentIndex = (currentIndex + 1) % itemCount;
+            switchCarousel(currentIndex);
+        }, 5000);
+
+        // 鼠标悬停暂停轮播
+        carouselInner.parentNode.addEventListener('mouseenter', () => {
+            clearInterval(autoPlay);
+        });
+
+        // 鼠标离开继续轮播
+        carouselInner.parentNode.addEventListener('mouseleave', () => {
+            autoPlay = setInterval(() => {
+                currentIndex = (currentIndex + 1) % itemCount;
+                switchCarousel(currentIndex);
+            }, 5000);
+        });
+
+        // 二、视频播放逻辑
+        const videoCover = document.getElementById('videoCover');
+        const playBtn = document.getElementById('playBtn');
+        const memoryVideo = document.getElementById('memoryVideo');
+
+        playBtn.addEventListener('click', () => {
+            videoCover.style.display = 'none';
+            memoryVideo.play();
+        });
+
+        // 视频暂停时显示封面
+        memoryVideo.addEventListener('pause', () => {
+            videoCover.style.display = 'flex';
+        });
+
+        // 三、音频解锁（点击页面任意位置）
+        document.addEventListener('click', () => {
+            const bgAudio = document.getElementById('bgAudio');
+            bgAudio.muted = false;
+            bgAudio.play().catch(err => console.log('音频播放失败：', err));
+        });
+
+        // 四、爱心点击特效
+        const heartContainer = document.getElementById('heartContainer');
+        document.addEventListener('click', (e) => {
+            if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'A' && e.target.tagName !== 'VIDEO') {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = '<i class="fa fa-heart"></i>';
+                heart.style.left = `${e.clientX}px`;
+                heart.style.top = `${e.clientY}px`;
+                heart.style.fontSize = `${Math.random() * 20 + 10}px`;
+                heartContainer.appendChild(heart);
+                // 移除爱心
+                setTimeout(() => {
+                    heart.remove();
+                }, 1500);
+            }
+        });
+
+        // 初始化轮播指示器
+        updateDots();
+    </script>
+</body>
+</html>
